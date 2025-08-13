@@ -1,0 +1,18 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Estudar JS",
+      "description": "Focar em Async/Await e Promises",
+      "status": "pendente",
+      "dueDate": "2025-08-30"
+    },
+    {
+      "title": "dsadas",
+      "description": "lllllllllllllllll",
+      "status": "concluída",
+      "dueDate": "2025-08-12",
+      "id": "c5a8"
+    }
+  ]
+}
