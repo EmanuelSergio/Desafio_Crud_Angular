@@ -1,0 +1,8 @@
+.full-width{ width: 100%; }
+.toolbar { margin-bottom: 16px; display: flex; justify-content: flex-end; }
+.spacer { flex: 1 1 auto; }
+.card-rounded { border-radius: 20px; }
+.state { display:flex; justify-content:center; align-items:center; padding:24px; color: rgba(0,0,0,.6); }
+.state.error { color: #b00020; }
+.state.empty { justify-content: flex-start; }
+.overdue { color: #d32f2f; font-weight: 600; }

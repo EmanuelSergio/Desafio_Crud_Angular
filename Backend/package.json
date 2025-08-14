@@ -1,4 +1,10 @@
 {
+  "name": "taskmanager-backend",
+  "private": true,
+  "scripts": {
+    "api": "json-server --watch db.json --port 3000",
+    "api:nowatch": "json-server db.json --port 3000"
+  },
   "dependencies": {
     "json-server": "^1.0.0-beta.3"
   }

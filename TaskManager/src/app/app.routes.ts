@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { TaskListComponent } from './features/tasks/task-list.component';
-import { TaskFormComponent } from './features/tasks/task-form.component';
+import { TaskListComponent } from './features/tasks/List/task-list.component';
+import { TaskFormComponent } from './features/tasks/Create/task-form.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'tasks' },

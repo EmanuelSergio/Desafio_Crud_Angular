@@ -1,0 +1,77 @@
+<div class="toolbar">
+  <mat-form-field appearance="outline">
+    <mat-label>Filtrar</mat-label>
+    <input matInput #filterInput (keyup)="applyFilterFromInput(filterInput.value)" placeholder="Busque por título, descrição ou status" />
+    <button mat-icon-button matSuffix aria-label="Limpar" (click)="filterInput.value=''; applyFilterFromInput('')">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-form-field>
+  <span class="spacer"></span>
+  <button mat-raised-button color="primary" (click)="add()">
+    <mat-icon>add</mat-icon>
+    Nova Tarefa
+  </button>
+</div>
+
+<mat-card class="card-rounded">
+  <mat-card-header>
+    <mat-card-title>Tarefas</mat-card-title>
+    <mat-card-subtitle>Lista de tarefas pendentes e concluídas</mat-card-subtitle>
+  </mat-card-header>
+  <br>
+  <mat-card-content>
+
+    <div class="state" *ngIf="loading()">
+      <mat-progress-spinner diameter="40" mode="indeterminate"></mat-progress-spinner>
+    </div>
+
+    <div class="state error" *ngIf="!loading() && error()">{{ error() }}</div>
+
+    <ng-container *ngIf="!loading() && !error()">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2 full-width">
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
+          <td mat-cell *matCellDef="let t" [class.overdue]="isOverdue(t)">{{ t.title }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Descrição</th>
+          <td mat-cell *matCellDef="let t">{{ t.description }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let t">
+            <button mat-stroked-button color="accent" (click)="toggle(t)">
+              {{ t.status === 'concluída' ? 'Concluída' : 'Pendente' }}
+            </button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dueDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Vencimento</th>
+          <td mat-cell *matCellDef="let t" [class.overdue]="isOverdue(t)">{{ t.dueDate | date:'dd/MM/yyyy' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Ações</th>
+          <td mat-cell *matCellDef="let t">
+            <button mat-icon-button color="primary" matTooltip="Editar" (click)="edit(t)"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button color="warn" matTooltip="Excluir" (click)="remove(t)"><mat-icon>delete</mat-icon></button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      </table>
+
+      <div class="state empty" *ngIf="!dataSource.data.length">
+        Nenhuma tarefa encontrada.
+      </div>
+
+
+    </ng-container>
+
+  </mat-card-content>
+</mat-card>

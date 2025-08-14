@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Task, TaskStatus } from '../models/task.model';
 
-const API = 'http://localhost:3000/tasks';
+const API = '/api/tasks';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {

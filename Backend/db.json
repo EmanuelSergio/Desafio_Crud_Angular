@@ -1,18 +1,46 @@
 {
   "tasks": [
     {
-      "id": "1",
-      "title": "Estudar JS",
-      "description": "Focar em Async/Await e Promises",
+      "title": "dsadas",
+      "description": "boaaa",
       "status": "pendente",
-      "dueDate": "2025-08-30"
+      "dueDate": "2025-11-08",
+      "id": "c5a8"
     },
     {
-      "title": "dsadas",
-      "description": "lllllllllllllllll",
+      "id": "727e",
+      "title": "fiz tarefas",
+      "description": "tarefas de casa ",
+      "status": "pendente",
+      "dueDate": "2025-08-15"
+    },
+    {
+      "id": "d4e5",
+      "title": "Preparar apresentação",
+      "description": "Montar slides para reunião",
+      "status": "pendente",
+      "dueDate": "2025-08-20"
+    },
+    {
+      "id": "f6g7",
+      "title": "Atualizar currículo",
+      "description": "Adicionar novos projetos",
       "status": "concluída",
-      "dueDate": "2025-08-12",
-      "id": "c5a8"
+      "dueDate": "2025-08-10"
+    },
+    {
+      "id": "h8i9",
+      "title": "Ler documentação",
+      "description": "Ler documentação oficial do Angular",
+      "status": "pendente",
+      "dueDate": "2025-08-25"
+    },
+    {
+      "id": "l3m4",
+      "title": "Organizar arquivos",
+      "description": "Separar arquivos por módulos",
+      "status": "concluída",
+      "dueDate": "2025-08-22"
     }
   ]
 }

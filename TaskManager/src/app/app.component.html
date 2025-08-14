@@ -1,13 +1,11 @@
 <mat-sidenav-container class="layout-container">
-  <mat-sidenav #drawer mode="side" [opened]="true" class="sidenav">
-    <mat-toolbar color="terceary">Menu</mat-toolbar>
+  <mat-sidenav #drawer [mode]="isHandset() ? 'over' : 'side'" [opened]="!isHandset()" class="sidenav">
+    <mat-toolbar color="primary">Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/tasks" (click)="drawer.mode === 'over' ? drawer.close() : null">
-        <mat-icon>checklist</mat-icon>
+      <a mat-list-item routerLink="/tasks" (click)="isHandset() ? drawer.close() : null">
+        <mat-icon aria-hidden="true">checklist</mat-icon>
         <span>Tarefas</span>
       </a>
-      <!-- Espaço para itens futuros -->
-      <!-- <a mat-list-item routerLink="/reports"><mat-icon>assessment</mat-icon><span>Relatórios</span></a> -->
     </mat-nav-list>
   </mat-sidenav>
 

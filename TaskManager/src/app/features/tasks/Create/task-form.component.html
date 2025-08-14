@@ -16,6 +16,17 @@
   </mat-form-field>
 
   <mat-form-field appearance="fill" class="full">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option value="pendente">Pendente</mat-option>
+      <mat-option value="concluída">Concluída</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.controls.status.touched && form.controls.status.errors">
+      Status é obrigatório
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full">
     <mat-label>Data de vencimento</mat-label>
     <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="dueDate" />
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -26,7 +37,7 @@
   </mat-form-field>
 
   <div class="actions">
-    <button mat-stroked-button color="primary" routerLink="/tasks">Cancelar</button>
+    <button mat-stroked-button color="primary" type="button" (click)="cancel()">Cancelar</button>
     <button mat-raised-button color="accent" type="submit">Salvar</button>
   </div>
 </form>
