@@ -1,8 +1,64 @@
-.full-width{ width: 100%; }
-.toolbar { margin-bottom: 16px; display: flex; justify-content: flex-end; }
-.spacer { flex: 1 1 auto; }
-.card-rounded { border-radius: 20px; }
-.state { display:flex; justify-content:center; align-items:center; padding:24px; color: rgba(0,0,0,.6); }
-.state.error { color: #b00020; }
-.state.empty { justify-content: flex-start; }
-.overdue { color: #d32f2f; font-weight: 600; }
+.full-width {
+  width: 100%;
+}
+.toolbar {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+.card-rounded {
+  border-radius: 20px;
+}
+.state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.state.error {
+  color: #b00020;
+}
+.state.empty {
+  justify-content: flex-start;
+}
+.overdue {
+  color: #d32f2f;
+  font-weight: 600;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.status-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  margin-right: 6px;
+}
+.status-done {
+  background-color: #2e7d32;
+}
+.status-pending {
+  background-color: #f57c00;
+}
+.status-overdue {
+  background-color: #d32f2f;
+}
+
+/* Center chip and icon together */
+.status-cell {
+  text-align: center;
+}
+.status-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}

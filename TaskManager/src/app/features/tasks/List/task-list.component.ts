@@ -1,4 +1,10 @@
-import { Component, ViewChild, AfterViewInit, inject, signal } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  AfterViewInit,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
@@ -14,7 +20,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TaskService } from '../../../core/services/task.service';
-import { Task } from '../../../core/models/task.model';
+import { Task, TaskStatus } from '../../../core/models/task.model';
 import { ConfirmDialogService } from '../../../shared/dialogs/confirm-dialog/confirm-dialog.service';
 
 @Component({
@@ -33,10 +39,10 @@ import { ConfirmDialogService } from '../../../shared/dialogs/confirm-dialog/con
     MatInputModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.css']
+  styleUrls: ['./task-list.component.css'],
 })
 export class TaskListComponent implements AfterViewInit {
   private taskService = inject(TaskService);
@@ -59,7 +65,8 @@ export class TaskListComponent implements AfterViewInit {
       return (
         data.title.toLowerCase().includes(term) ||
         data.description.toLowerCase().includes(term) ||
-        data.status.toLowerCase().includes(term)
+        data.status.toLowerCase().includes(term) ||
+        this.displayStatus(data).toLowerCase().includes(term)
       );
     };
   }
@@ -72,49 +79,66 @@ export class TaskListComponent implements AfterViewInit {
     this.loading.set(true);
     this.error.set(null);
     this.taskService.list().subscribe({
-      next: tasks => {
+      next: (tasks) => {
         this.dataSource.data = tasks;
         this.loading.set(false);
       },
       error: () => {
         this.error.set('Erro ao carregar as tarefas.');
         this.loading.set(false);
-        this.snack.open('Erro ao carregar as tarefas', 'Fechar', { duration: 3000 });
-      }
+        this.snack.open('Erro ao carregar as tarefas', 'Fechar', {
+          duration: 3000,
+        });
+      },
     });
   }
 
-  add() { this.router.navigate(['/tasks/new']); }
-  edit(task: Task) { this.router.navigate(['/tasks', task.id, 'edit']); }
+  add() {
+    this.router.navigate(['/tasks/new']);
+  }
+  edit(task: Task) {
+    this.router.navigate(['/tasks', task.id, 'edit']);
+  }
 
   remove(task: Task) {
-    this.confirm.open({
-      title: 'Excluir tarefa',
-      message: `Tem certeza que deseja excluir "${task.title}"?`,
-      confirmText: 'Excluir',
-      cancelText: 'Cancelar',
-      color: 'warn',
-      icon: 'delete'
-    }).subscribe((confirmed: boolean) => {
-      if (!confirmed) return;
-      this.taskService.delete(task.id!).subscribe({
-        next: () => {
-          this.snack.open('Tarefa excluída', 'Fechar', { duration: 2500 });
-          this.load();
-        },
-        error: () => this.snack.open('Erro ao excluir tarefa', 'Fechar', { duration: 3000 })
+    this.confirm
+      .open({
+        title: 'Excluir tarefa',
+        message: `Tem certeza que deseja excluir "${task.title}"?`,
+        confirmText: 'Excluir',
+        cancelText: 'Cancelar',
+        color: 'warn',
+        icon: 'delete',
+      })
+      .subscribe((confirmed: boolean) => {
+        if (!confirmed) return;
+        this.taskService.delete(task.id!).subscribe({
+          next: () => {
+            this.snack.open('Tarefa excluída', 'Fechar', { duration: 2500 });
+            this.load();
+          },
+          error: () =>
+            this.snack.open('Erro ao excluir tarefa', 'Fechar', {
+              duration: 3000,
+            }),
+        });
       });
-    });
   }
 
   toggle(task: Task) {
     this.taskService.toggleComplete(task).subscribe({
       next: () => {
-        const msg = task.status === 'concluída' ? 'Tarefa marcada como pendente' : 'Tarefa concluída';
+        const msg =
+          task.status === 'concluída'
+            ? 'Tarefa marcada como pendente'
+            : 'Tarefa concluída';
         this.snack.open(msg, 'Fechar', { duration: 2500 });
         this.load();
       },
-      error: () => this.snack.open('Erro ao atualizar status', 'Fechar', { duration: 3000 })
+      error: () =>
+        this.snack.open('Erro ao atualizar status', 'Fechar', {
+          duration: 3000,
+        }),
     });
   }
 
@@ -134,5 +158,10 @@ export class TaskListComponent implements AfterViewInit {
     const due = new Date(t.dueDate);
     due.setHours(0, 0, 0, 0);
     return due < today;
+  }
+
+  displayStatus(t: Task): TaskStatus {
+    if (t.status === 'concluída') return 'concluída';
+    return this.isOverdue(t) ? 'vencido' : 'pendente';
   }
 }
